@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import './sign.css';
+import { Meteor } from 'meteor/meteor';
 
 export default class Sign extends Component {
 
+    constructor(props){
+        super(props);
+        this.login = this.login.bind(this);
+    }
+    
     componentWillMount() {
         $(function() {
 
@@ -21,6 +27,22 @@ export default class Sign extends Component {
                 e.preventDefault();
             });
         
+        });
+    }
+
+
+    login(e){
+        e.preventDefault();
+        let userNameVar = this.refs.userNameLog.value;
+        let passVar = this.refs.passLog.value;
+        Accounts.createUser({
+            username: userNameVar,
+            password: passVar
+        }, function(error){
+            if(error.reason){
+                //showError(error.reason);
+                alert(error.reason);
+            }
         });
     }
     
@@ -44,24 +66,32 @@ export default class Sign extends Component {
                         <div className="panel-body">
                             <div className="row">
                                 <div className="col-lg-12">
-                                    <form id="login-form" action="https://phpoll.com/login/process" method="post" role="form" style={{'display': 'block'}}>
+                                    <form id="login-form" role="form" style={{'display': 'block'}}>
+                                        
                                         <div className="form-group">
-                                            <input type="text" name="username" id="usernameLog" tabIndex="1" className="form-control" placeholder="Username" />
+                                            <input type="text" name="username" id="userNameLog" tabIndex="1" 
+                                            className="form-control" placeholder="Username" ref="userNameLog"/>
                                         </div>
+                                        
                                         <div className="form-group">
-                                            <input type="password" name="password" id="passwordLog" tabIndex="2" className="form-control" placeholder="Password"/>
+                                            <input type="password" name="password" id="passwordLog" tabIndex="2" 
+                                            className="form-control" placeholder="Password" ref="passLog"/>
                                         </div>
+                                        
                                         <div className="form-group text-center">
                                             <input type="checkbox" tabIndex="3" className="" name="remember" id="remember"/>
                                             <label htmlFor="remember"> Remember Me</label>
                                         </div>
+                                       
                                         <div className="form-group">
                                             <div className="row">
                                                 <div className="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="login-submit" id="login-submit" tabIndex="4" className="form-control btn btn-login" value="Log In"/>
+                                                    <input type="submit" name="login-submit" id="login-submit" 
+                                                    tabIndex="4" className="form-control btn btn-login" value="Log In" onClick={this.login}/>
                                                 </div>
                                             </div>
                                         </div>
+                                       
                                         <div className="form-group">
                                             <div className="row">
                                                 <div className="col-lg-12">
