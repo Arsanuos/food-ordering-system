@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import './sign.css';
 import { Meteor } from 'meteor/meteor';
+import Alert from 'react-s-alert';
+import { FlowRouter } from 'meteor/kadira:flow-router' 
+
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 export default class Sign extends Component {
 
@@ -9,56 +14,35 @@ export default class Sign extends Component {
         this.login = this.login.bind(this);
     }
     
-    componentWillMount() {
-        $(function() {
-
-            $('#login-form-link').click(function(e) {
-                $("#login-form").delay(100).fadeIn(100);
-                 $("#register-form").fadeOut(100);
-                $('#register-form-link').removeClass('active');
-                $(this).addClass('active');
-                e.preventDefault();
-            });
-            $('#register-form-link').click(function(e) {
-                $("#register-form").delay(100).fadeIn(100);
-                 $("#login-form").fadeOut(100);
-                $('#login-form-link').removeClass('active');
-                $(this).addClass('active');
-                e.preventDefault();
-            });
-        
-        });
-    }
-
 
     login(e){
         e.preventDefault();
         let userNameVar = this.refs.userNameLog.value;
         let passVar = this.refs.passLog.value;
-        Accounts.createUser({
-            username: userNameVar,
-            password: passVar
-        }, function(error){
-            if(error.reason){
-                //showError(error.reason);
-                alert(error.reason);
+        Meteor.loginWithPassword(userNameVar, passVar, (error) => {
+            if(error == undefined){
+                //TODO:: redirect to home page.
+                FlowRouter.go('Home');
+            }else{
+                Alert.success("Can't login user and password may be incorrect.", {
+                    position: 'top-right',
+                    effect: 'slide',
+                    timeout: 5000
+                });
             }
         });
     }
     
     render(){
         return (
-        <div className="container">
+        <div className="container" style={{paddingTop:90}}>
             <div className="row">
                 <div className="col-md-6 col-md-offset-3">
                     <div className="panel panel-login">
                         <div className="panel-heading">
                             <div className="row">
-                                <div className="col-xs-6">
+                                <div className="col-xs-12">
                                     <a href="#" className="active" id="login-form-link">Login</a>
-                                </div>
-                                <div className="col-xs-6">
-                                    <a href="#" id="register-form-link">Register</a>
                                 </div>
                             </div>
                             <hr/>
@@ -102,33 +86,13 @@ export default class Sign extends Component {
                                             </div>
                                         </div>
                                     </form>
-                                    <form id="register-form" action="https://phpoll.com/register/process" method="post" role="form" style={{'display': 'none'}}>
-                                        <div className="form-group">
-                                            <input type="text" name="username" id="usernameReg" tabIndex="1" className="form-control" placeholder="Username" />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="email" name="email" id="email" tabIndex="1" className="form-control" placeholder="Email Address" />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="password" name="password" id="passwordReg" tabIndex="2" className="form-control" placeholder="Password"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="password" name="confirm-password" id="confirm-password" tabIndex="2" className="form-control" placeholder="Confirm Password"/>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="row">
-                                                <div className="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="register-submit" id="register-submit" tabIndex="4" className="form-control btn btn-register" value="Register Now"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Alert stack={{limit: 3}} />
         </div>);
     }
 }
