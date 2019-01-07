@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class Nav extends Component {
+import NotFound from '../../pages/not-found/NotFound.js'
+
+class Nav extends Component {
 
     render() {
-        console.log(Meteor.user());
+        let {currentUser} = this.props;
+        let username = '';
+        if(currentUser != undefined){
+          username = currentUser.username;
+        }
         return (
             <nav className="navbar navbar-default navbar-static-top">
             <div className="container-fluid">
@@ -47,7 +54,7 @@ export default class Nav extends Component {
                   <li><a href="#">Link</a></li>
                   <li className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" 
-                    role="button" aria-haspopup="true" aria-expanded="false">{Meteor.user()} <span className="caret"></span></a>
+                    role="button" aria-haspopup="true" aria-expanded="false">{username} <span className="caret"></span></a>
                     <ul className="dropdown-menu">
                       <li><a href="#">Action</a></li>
                       <li><a href="#">Another action</a></li>
@@ -63,3 +70,9 @@ export default class Nav extends Component {
         )
     }
 }
+
+export default withTracker(() => {
+  return {
+    currentUser: Meteor.user(),
+  };
+})(Nav);
