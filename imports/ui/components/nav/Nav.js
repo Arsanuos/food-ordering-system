@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import NotFound from '../../pages/not-found/NotFound.js'
-
 class Nav extends Component {
+
+    constructor(props){
+      super(props);
+      this.logout = this.logout.bind(this);
+    }
+
+
+    logout(){
+      Meteor.logout();
+    }
 
     render() {
         let {currentUser} = this.props;
@@ -23,44 +31,30 @@ class Nav extends Component {
                   <span className="icon-bar"></span>
                   <span className="icon-bar"></span>
                 </button>
-                <a className="navbar-brand" href="#">Brand</a>
+                <a className="navbar-brand" href="/">Home</a>
               </div>
           
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul className="nav navbar-nav">
-                  <li className="active"><a href="#">Link <span className="sr-only">(current)</span></a></li>
-                  <li><a href="#">Link</a></li>
-                  <li className="dropdown">
-                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" 
-                    role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-                    <ul className="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li role="separator" className="divider"></li>
-                      <li><a href="#">Separated link</a></li>
-                      <li role="separator" className="divider"></li>
-                      <li><a href="#">One more separated link</a></li>
-                    </ul>
-                  </li>
+                  <li><a href="foods">Food Menu </a></li>
+                  <li><a href="drinks">Drinks</a></li>
                 </ul>
                 <form className="navbar-form navbar-left">
                   <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Search"/>
+                    <input type="text" className="form-control" placeholder="Search Menu"/>
                   </div>
                   <button type="submit" className="btn btn-default">Submit</button>
                 </form>
                 <ul className="nav navbar-nav navbar-right">
-                  <li><a href="#">Link</a></li>
+                  <li><a href="#"></a></li>
                   <li className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" 
-                    role="button" aria-haspopup="true" aria-expanded="false">{username} <span className="caret"></span></a>
+                    role="button" aria-haspopup="true" aria-expanded="false">Signed in as {username} <span className="caret"></span></a>
                     <ul className="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
+                      <li><a href="settings">Settings</a></li>
+                      <li><a href="purchases">Purchases</a></li>
                       <li role="separator" className="divider"></li>
-                      <li><a href="#">Separated link</a></li>
+                      <li><a onClick={this.logout}>Logout</a></li>
                     </ul>
                   </li>
                 </ul>
