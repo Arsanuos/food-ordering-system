@@ -23,6 +23,5 @@ less@2.8.0                    # Leaner CSS language
 
 meteortesting:mocha               # A package for writing and running your meteor app and package tests with mocha
 johanbrook:publication-collector  # Test a Meteor publication by collecting its output
-twbs:bootstrap
 accounts-password
 react-meteor-data

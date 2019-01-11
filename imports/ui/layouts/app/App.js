@@ -4,6 +4,11 @@ import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Meteor } from 'meteor/meteor';
 
+
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+
 export default class App extends Component {
 
     constructor(props){
@@ -33,7 +38,9 @@ export default class App extends Component {
         return (
             <React.Fragment>
                 {this.customRender()}
+                <Alert stack={{limit: 3}} />
             </React.Fragment>
+            
         );
     }
 }

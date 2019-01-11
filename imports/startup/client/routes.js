@@ -13,7 +13,7 @@ Meteor.startup(() => {
   //FlowRouter.go('Home');
 });
 
-FlowRouter.route('/' , {
+FlowRouter.route(['/', '/home'] , {
   name: 'Home',
   action(){
     if(Meteor.userId() == undefined){
@@ -36,10 +36,10 @@ FlowRouter.route('/SignIn', {
   }
 })
 
-FlowRouter.route('/foods', {
+FlowRouter.route('/menu', {
   name: 'item',
   action() {
-    mount(App, {page: <Item />})
+    mount(App, {page: <Item />, showNav:true})
   }
 })
 
