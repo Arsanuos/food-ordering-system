@@ -1,19 +1,19 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { FlowRouter } from 'meteor/kadira:flow-router' 
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import {mount} from 'react-mounter';
 
 import App from '../../ui/layouts/app/App.js';
 import Sign from '../../ui/pages/sign-in/Sign.js';
-import Home from '../../ui/pages/home/Home.js'
-import NotFound from '../../ui/pages/not-found/NotFound.js'
+import Home from '../../ui/pages/home/Home.js';
+import NotFound from '../../ui/pages/not-found/NotFound.js';
 import Item from '../../ui/components/item/Item.js';
 
 Meteor.startup(() => {
   //FlowRouter.go('Home');
 });
 
-FlowRouter.route(['/', '/home'], {
+FlowRouter.route('/' , {
   name: 'Home',
   action(){
     if(Meteor.userId() == undefined){
@@ -29,7 +29,7 @@ FlowRouter.route('/SignIn', {
   name: 'SignIn',
   action() {
     if(Meteor.userId() != undefined){
-      FlowRouter.go(FlowRouter.getRouteName());
+      FlowRouter.go('Home');
       return;
     }
     mount(App , {page: <Sign/>, showNav:false});

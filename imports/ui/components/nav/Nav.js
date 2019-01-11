@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { FlowRouter } from 'meteor/kadira:flow-router' 
 
 class Nav extends Component {
 
@@ -12,6 +13,11 @@ class Nav extends Component {
 
     logout(){
       Meteor.logout();
+      FlowRouter.go('SignIn', (error) => {
+        if(error == undefined){
+          FlowRouter.go("SignIn");
+        }
+      });
     }
 
     render() {
@@ -53,8 +59,7 @@ class Nav extends Component {
                     <ul className="dropdown-menu">
                       <li><a href="settings">Settings</a></li>
                       <li><a href="purchases">Purchases</a></li>
-                      <li role="separator" className="divider"></li>
-                      <li><a onClick={this.logout}>Logout</a></li>
+                      <li><a href="" onClick={this.logout}>Logout</a></li>
                     </ul>
                   </li>
                 </ul>

@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import Nav from '../../components/nav/Nav.js'
+import Nav from '../../components/nav/Nav.js';
+import { Tracker } from 'meteor/tracker';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Meteor } from 'meteor/meteor';
 
 export default class App extends Component {
 
@@ -34,3 +37,11 @@ export default class App extends Component {
         );
     }
 }
+
+
+Tracker.autorun(() => {
+    if(Meteor.userId() != null){
+        return;
+    }
+    FlowRouter.go('SignIn');
+});
