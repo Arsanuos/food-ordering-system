@@ -64,7 +64,7 @@ export default class Sign extends Component {
                                         <div className="form-group">
                                             <div className="row justify-content-center">
                                                 <div className="col-sm-6">
-                                                    <input type="submit" name="login-submit" id="login-submit" 
+                                                    <input type="button" name="login-submit" id="login-submit" 
                                                     tabIndex="4" className="form-control btn btn-login" value="Log In" onClick={this.login}/>
                                                 </div>
                                             </div>

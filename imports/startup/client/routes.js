@@ -13,7 +13,7 @@ Meteor.startup(() => {
   //FlowRouter.go('Home');
 });
 
-FlowRouter.route(['/', '/home'] , {
+FlowRouter.route('/' , {
   name: 'Home',
   action(){
     if(Meteor.userId() == undefined){

@@ -52,7 +52,7 @@ class Nav extends Component {
                         <a className="dropdown-item" href="/settings">Settings</a>
                         <a className="dropdown-item" href="/mycart">Purchases</a>
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="">Logout</a>
+                        <a className="dropdown-item" href="" onClick={this.logout}>Logout</a>
                       </div>
                     </li>
                 </ul>

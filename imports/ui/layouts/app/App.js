@@ -47,8 +47,7 @@ export default class App extends Component {
 
 
 Tracker.autorun(() => {
-    if(Meteor.userId() != null){
-        return;
+    if(Meteor.userId() == null){
+        FlowRouter.go('SignIn');
     }
-    FlowRouter.go('SignIn');
 });
