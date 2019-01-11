@@ -10,7 +10,7 @@ import NotFound from '../../ui/pages/not-found/NotFound.js';
 import Item from '../../ui/components/item/Item.js';
 
 Meteor.startup(() => {
-  //FlowRouter.go('Home');
+  
 });
 
 FlowRouter.route('/' , {

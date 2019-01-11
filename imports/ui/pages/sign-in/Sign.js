@@ -3,6 +3,8 @@ import './sign.css';
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router' 
 
+import Alert from 'react-s-alert';
+
 export default class Sign extends Component {
 
     constructor(props){
@@ -64,8 +66,9 @@ export default class Sign extends Component {
                                         <div className="form-group">
                                             <div className="row justify-content-center">
                                                 <div className="col-sm-6">
-                                                    <input type="button" name="login-submit" id="login-submit" 
-                                                    tabIndex="4" className="form-control btn btn-login" value="Log In" onClick={this.login}/>
+                                                    <input type="submit" name="login-submit" id="login-submit" 
+                                                    tabIndex="4" className="form-control btn btn-login" 
+                                                    value="Log In" onClick={this.login}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +77,8 @@ export default class Sign extends Component {
                                             <div className="row justify-content-center">
                                                 <div className="col-lg-12">
                                                     <div className="text-center">
-                                                        <a href="https://phpoll.com/recover" tabIndex="5" className="forgot-password">Forgot Password?</a>
+                                                        <a href="https://phpoll.com/recover" tabIndex="5" 
+                                                        className="forgot-password">Forgot Password?</a>
                                                     </div>
                                                 </div>
                                             </div>
