@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { FlowRouter } from 'meteor/kadira:flow-router' 
+import { truncate } from 'fs';
 
 class Nav extends Component {
 
     constructor(props){
       super(props);
       this.logout = this.logout.bind(this);
+      this.renderAdmin = this.renderAdmin.bind(this);
     }
 
 
@@ -20,15 +22,25 @@ class Nav extends Component {
       });
     }
 
+    renderAdmin(admin){
+      if(Meteor.userId() && admin){
+        return (<React.Fragment>
+            <div className="dropdown-divider"></div>
+            <a className="dropdown-item" href="/users">ManageUsers</a>
+          </React.Fragment>);
+
+      }
+    }
+
     render() {
-        let {currentUser} = this.props;
+        let {currentUser, admin} = this.props;
         let username = '';
         if(currentUser != undefined){
           username = currentUser.username;
         }
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="#">Store</a>
+                <a className="navbar-brand" href="/">Store</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" 
                   data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
                   aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +65,9 @@ class Nav extends Component {
                       <div className="dropdown-menu dropdown-menu-right" >
                         <a className="dropdown-item" href="/settings">Settings</a>
                         <a className="dropdown-item" href="/mycart">Purchases</a>
+                        {
+                          this.renderAdmin(admin)
+                        }
                         <div className="dropdown-divider"></div>
                         <a className="dropdown-item" href="" onClick={this.logout}>Logout</a>
                       </div>
@@ -67,5 +82,6 @@ class Nav extends Component {
 export default withTracker(() => {
   return {
     currentUser: Meteor.user(),
+    admin: Roles.userIsInRole(Meteor.user(), ['admin']) ? true : false,
   };
 })(Nav);
