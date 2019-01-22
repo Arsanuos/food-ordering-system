@@ -11,11 +11,32 @@ SimpleSchema.defineValidationErrorTransform(error => {
 
 export const Menu = new Mongo.Collection('menu');
 
-export const schema = new SimpleSchema({
+Menu.schema = new SimpleSchema({
    id: {
       type: SimpleSchema.Integer,
       required: true,
    },
    name: String,
-   price: SimpleSchema.Integer
+   price: Number,
 }, { requiredByDefault: false, check});
+
+
+export const interface = {
+   insert: function(){
+       return 'add-to-menu';
+   },
+   delete: function(){
+       return 'remove-from-menu';
+   },
+   update: function(){
+       return 'update-item';
+   },
+   fetch: function(){
+       return 'fetch';
+   },
+   count: function(){
+       return 'count';
+   }
+}
+
+

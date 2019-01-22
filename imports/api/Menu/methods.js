@@ -1,9 +1,10 @@
-import Menu from './Menu.js';
-import Meteor from 'meteor/meteor';
+import {Menu} from './Menu.js';
+import { Meteor } from 'meteor/meteor';
 import check from 'meteor/check';
 
 Meteor.methods({
     'add-to-menu'(item){
+        console.log("inserted");
         Menu.insert(item);
     },
     'remove-from-menu'(itemId){
@@ -19,22 +20,3 @@ Meteor.methods({
         return Menu.count();
     }
 });
-
-
-export const interface = {
-    insert: function(){
-        return 'add-to-menu';
-    },
-    delete: function(){
-        return 'remove-from-menu';
-    },
-    update: function(){
-        return 'update-item';
-    },
-    fetch: function(){
-        return 'fetch';
-    },
-    count: function(){
-        return 'count';
-    }
-}

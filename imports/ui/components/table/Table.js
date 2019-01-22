@@ -1,19 +1,26 @@
 import React, {Component} from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import './table.css';
-import Meteor from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import CollectionFactory from '../../../api/factory/Factory.js';
 
 
 class Table extends Component {
-    
+
 
     constructor(props) {
         super(props);
         this.collection = this.props.collection;
-        this.validator = this.props.validator.newContext();
-        this.database = this.props.database;
+        
+        let validator = this.props.validator;
+        this.validator = validator;
+        
+        let database = this.props.database;;
+        this.database = database;
+        
+        this.columns = Object.keys(this.props.validator.schema());
+        
         this.cellEditProp = {
             exportCSVText: 'Export',
             insertText: 'New Row',
@@ -22,11 +29,11 @@ class Table extends Component {
             blurToSave: true,
             beforeSaveCell: this.onBeforeSaveCell
         };
-        
+
         this.options = {
             handleConfirmDeleteRow: this.customConfirm,
-            beforeInsertRow: this.beforeInsertRow,
-            page: 2,  // which page you want to show as default
+            afterInsertRow: this.onAfterInsertRow,   // A hook for after insert rows
+            page: 1,  // which page you want to show as default
             sizePerPageList: [ {
                 text: '5', value: 5
             }, {
@@ -35,30 +42,27 @@ class Table extends Component {
                 text: '15', value: 15
             }, {
                 text: '20', value: 20
-            } , {
-                text: 'All', value: this.collection.find().count()
             } ], // you can change the dropdown list for size per page
             sizePerPage: 10,  // which size per page you want to locate as default
             pageStartIndex: 1, // where to start counting the pages
             paginationSize: 3,  // the pagination bar size.
             firstPage: 'First', // First page button text
             lastPage: 'Last', // Last page button text
-            paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
-            paginationPosition: 'top'  // default is bottom, top and both is all available
             // hideSizePerPage: true > You can hide the dropdown for sizePerPage
             // alwaysShowAllBtns: true // Always show next and previous button
             // withFirstAndLast: false > Hide the going to First and Last page button
+            database: database,
+            validator: validator,
         };
         this.exportToPDF = this.exportToPDF.bind(this);
         this.renderShowsTotal = this.renderShowsTotal.bind(this);
         this.onBeforeSaveCell = this.onBeforeSaveCell.bind(this);
-        this.beforeInsertRow = this.beforeInsertRow.bind(this);
+        this.onAfterInsertRow = this.onAfterInsertRow.bind(this);
         this.customConfirm = this.customConfirm.bind(this);
         this.getColumns = this.getColumns.bind(this);
         this.containsData = this.containsData.bind(this);
 
         this.state = {
-            pageSize: this.options.sizePerPage,
             currentPage: 1,
             totalDataSize: this.collection.find({}).count(),
         };
@@ -78,18 +82,15 @@ class Table extends Component {
         // You can do any validation on here for editing value,
         // return false for reject the editing
         if(this.validator.isValid()){
-            Meteor.call(database.update(), row);
+            Meteor.call(this.database.update(), row);
             return true;
         }
         return false;
     }
     
-    beforeInsertRow(row) {
-        if(this.validator.isValid(row)){
-            Meteor.call(database.insert(), row);
-            return true;
-        }
-        return false;
+    onAfterInsertRow(row){
+        console.log(this)
+        Meteor.call(this.database.insert(), row);
     }
       
     customConfirm(next, dropRowKeys) {
@@ -120,10 +121,7 @@ class Table extends Component {
     }
 
     getColumns(){
-        if(this.containsData()){
-            return Object.keys(collection.findOne())
-        }
-        return [];
+        return this.columns;
     }
 
 
@@ -132,9 +130,9 @@ class Table extends Component {
         let columns = this.getColumns();
         let computedWidth = 100 / (columns.length - 1) + "%";
         let data = this.props.data;
-        if(columns.length){
+        if(columns.length == 0){
             return (
-                <div style="h1">
+                <div className="h1">
                     No data found.
                 </div>
             )
@@ -164,7 +162,7 @@ class Table extends Component {
 }
 
 export default withTracker((props) => {
-    //Meteor.subscribe('Menu');
+    Meteor.subscribe('Menu');
     let collection = new CollectionFactory().get(props.collectionName);
     return {
       data: collection.find({}).fetch(),
