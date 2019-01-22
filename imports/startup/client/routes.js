@@ -7,7 +7,10 @@ import App from '../../ui/layouts/app/App.js';
 import Sign from '../../ui/pages/sign-in/Sign.js';
 import Home from '../../ui/pages/home/Home.js';
 import NotFound from '../../ui/pages/not-found/NotFound.js';
-import Item from '../../ui/components/item/Item.js';
+import Menu from '../../ui/pages/menu/Menu.js';
+
+import { Menu as MenuCollection } from '../../api/Menu/Menu.js';
+import { schema as MenuSchema } from '../../api/Menu/Menu.js';
 
 Meteor.startup(() => {
   
@@ -37,9 +40,9 @@ FlowRouter.route('/SignIn', {
 })
 
 FlowRouter.route('/menu', {
-  name: 'item',
+  name: 'menu',
   action() {
-    mount(App, {page: <Item />, showNav:true})
+    mount(App, {page: <Menu collectionName={'menu'} database={MenuCollection} validator={MenuSchema} />, showNav:true})
   }
 })
 

@@ -1,0 +1,25 @@
+
+    sizePerPageListChange(pageSize) {
+        this.setState({
+            pageSize: pageSize,
+            data: getPageData(this.state.currentPage),
+        })
+    }
+    
+    onPageChange(page, pageSize) {
+        let start = (page - 1) * sizePerPage;
+        this.setState({
+            pageSize: pageSize,
+            currentPage: page,
+            data: getPageData(page, start, size),
+        })
+    }
+
+    containsData(){
+        return Meteor.call(this.collection.count()) > 0 ? true : false;
+    }
+
+    getPageData(pageNumber, start, size){
+        let collection = this.props.collection;
+        return collection.find({}, {skip: start, limit:size});
+    }

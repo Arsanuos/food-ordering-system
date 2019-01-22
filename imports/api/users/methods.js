@@ -22,9 +22,6 @@ Meteor.methods({
     'update-settings'(userid, newsettings){
         Settings.update(userid, newsettings);
     },
-    'search'(username){
-        return Meteor.users.findOne(username);
-    },
     'fetch'(start, end, N){
         return Meteor.users.find().skip(end - start + 1).limit(N);
     }
