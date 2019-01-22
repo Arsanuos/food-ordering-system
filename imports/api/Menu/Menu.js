@@ -23,19 +23,14 @@ Menu.schema = new SimpleSchema({
 
 export const interface = {
    insert: function(){
-       return 'add-to-menu';
+       return 'menu.add';
    },
    delete: function(){
-       return 'remove-from-menu';
+       return 'menu.remove';
    },
    update: function(){
-       return 'update-item';
-   },
-   fetch: function(){
-       return 'fetch';
-   },
-   count: function(){
-       return 'count';
+       console.log("hlkjsdlf");
+       return 'menu.update';
    }
 }
 

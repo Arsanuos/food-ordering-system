@@ -27,7 +27,9 @@ class Table extends Component {
             deleteText: 'Delete Row',
             mode: 'click',
             blurToSave: true,
-            beforeSaveCell: this.onBeforeSaveCell
+            afterSaveCell: function(row, cellName, cellValue) {
+                Meteor.call(database.update(), row._id, row);
+            }
         };
 
         this.options = {
@@ -48,6 +50,7 @@ class Table extends Component {
             paginationSize: 3,  // the pagination bar size.
             firstPage: 'First', // First page button text
             lastPage: 'Last', // Last page button text
+            afterDeleteRow: this.onAfterDeleteRow,  // A hook for after droping rows.
             // hideSizePerPage: true > You can hide the dropdown for sizePerPage
             // alwaysShowAllBtns: true // Always show next and previous button
             // withFirstAndLast: false > Hide the going to First and Last page button
@@ -56,11 +59,12 @@ class Table extends Component {
         };
         this.exportToPDF = this.exportToPDF.bind(this);
         this.renderShowsTotal = this.renderShowsTotal.bind(this);
-        this.onBeforeSaveCell = this.onBeforeSaveCell.bind(this);
+        //this.onAfterSaveCell = this.onAfterSaveCell.bind(this);
         this.onAfterInsertRow = this.onAfterInsertRow.bind(this);
         this.customConfirm = this.customConfirm.bind(this);
         this.getColumns = this.getColumns.bind(this);
         this.containsData = this.containsData.bind(this);
+        this.onAfterDeleteRow = this.onAfterDeleteRow.bind(this);
 
         this.state = {
             currentPage: 1,
@@ -69,6 +73,10 @@ class Table extends Component {
     }
     
     
+    onAfterDeleteRow(rowId) {
+
+    }
+
     renderShowsTotal(start, to, total) {
         return (
           <p style={ { color: 'blue' } }>
@@ -76,20 +84,9 @@ class Table extends Component {
           </p>
         );
     }
-    
-    
-    onBeforeSaveCell(row, cellName, cellValue) {
-        // You can do any validation on here for editing value,
-        // return false for reject the editing
-        if(this.validator.isValid()){
-            Meteor.call(this.database.update(), row);
-            return true;
-        }
-        return false;
-    }
+
     
     onAfterInsertRow(row){
-        console.log(this)
         Meteor.call(this.database.insert(), row);
     }
       
@@ -97,6 +94,9 @@ class Table extends Component {
         if (confirm('Are you sure you want to remove this/these item(s)?')) {
             // If the confirmation is true, call the function that
             // continues the deletion of the record.
+            dropRowKeys.forEach((rowId) => {
+                Meteor.call(this.database.delete(), rowId);
+            })
             next();
         }
     }
@@ -130,34 +130,25 @@ class Table extends Component {
         let columns = this.getColumns();
         let computedWidth = 100 / (columns.length - 1) + "%";
         let data = this.props.data;
-        if(columns.length == 0){
-            return (
-                <div className="h1">
-                    No data found.
-                </div>
-            )
-        }else{
-
-            return(
-                <React.Fragment>
-                    <BootstrapTable data={data} cellEdit={ this.cellEditProp } striped={true} hover={true} height='700'
-                        scrollTop={ 'Bottom' } pagination search deleteRow={ true } 
-                        selectRow={ { mode: 'checkbox' } } insertRow={ true } exportCSV={ true }
-                        hover options={ this.options } keyField='id'>
-                            {
-                                columns.map(function(name, index) {
-                                    if(name == 'id'){
-                                        return <TableHeaderColumn key={index} dataField={name} 
-                                        width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
-                                    }
-                                    return <TableHeaderColumn key={index} dataField={name} 
-                                    width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
-                                })
-                            }
-                        </BootstrapTable>
-                </React.Fragment>
-            );
-        }
+        return(
+            <React.Fragment>
+                <BootstrapTable data={data} cellEdit={ this.cellEditProp } striped={true} hover={true} height='700'
+                    scrollTop={ 'Bottom' } pagination search deleteRow={ true } 
+                    selectRow={ { mode: 'checkbox' } } insertRow={ true } exportCSV={ true }
+                    hover options={ this.options } keyField='_id'>
+                        {
+                            columns.map(function(name, index) {
+                                if(name == 'id'){
+                                    return <TableHeaderColumn key={index} dataField='_id' 
+                                    width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
+                                }
+                                return <TableHeaderColumn key={index} dataField={name} 
+                                width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
+                            })
+                        }
+                    </BootstrapTable>
+            </React.Fragment>
+        );
     }
 }
 
