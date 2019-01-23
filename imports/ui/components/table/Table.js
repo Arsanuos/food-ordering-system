@@ -65,6 +65,8 @@ class Table extends Component {
         this.getColumns = this.getColumns.bind(this);
         this.containsData = this.containsData.bind(this);
         this.onAfterDeleteRow = this.onAfterDeleteRow.bind(this);
+        this.delivered = this.delivered.bind(this);
+        this.initCols = this.initCols.bind(this);
 
         this.state = {
             currentPage: 1,
@@ -124,7 +126,49 @@ class Table extends Component {
         return this.columns;
     }
 
+    toggle(){
+        Meteor.call(this.database.markAsDelivered());
+    }
 
+    delivered(cell, row, enumObject, index) {
+        return (
+            <input type='checkbox' checked={ cell } onClick={this.toggle}/>
+        );
+    }
+
+    rowClassNameFormat(row, rowIdx) {
+        // row is whole row object
+        // rowIdx is index of row
+        console.log(row.delivered);
+        if(row.delivered == "Yes"){
+            return 'line-through';
+        }
+        return '';
+    }
+
+    initCols(computedWidth, columns){
+        if(this.props.collectionName == 'menu'){
+            return columns.map((name, index) => {
+                if(name == '_id'){
+                    return <TableHeaderColumn key={index} dataField='_id' 
+                    width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
+                }
+                return <TableHeaderColumn key={index} dataField={name} 
+                width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
+            });
+        } else if(this.props.collectionName == 'orders'){
+            return columns.map((name, index) => {
+                if(name == '_id'){
+                    return <TableHeaderColumn key={index} dataField='_id' 
+                    width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
+                }else if(name == 'delivered'){
+                    return (<TableHeaderColumn dataField='delivered' editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>);
+                }
+                return <TableHeaderColumn key={index} dataField={name} 
+                width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
+            });
+        }
+    }
 
     render() {
         let columns = this.getColumns();
@@ -135,16 +179,9 @@ class Table extends Component {
                 <BootstrapTable data={data} cellEdit={ this.cellEditProp } striped={true} hover={true} height='700'
                     scrollTop={ 'Bottom' } pagination search deleteRow={ true } 
                     selectRow={ { mode: 'checkbox' } } insertRow={ true } exportCSV={ true }
-                    hover options={ this.options } keyField='_id'>
+                    hover options={ this.options } keyField='_id' trClassName={this.rowClassNameFormat}>
                         {
-                            columns.map(function(name, index) {
-                                if(name == 'id'){
-                                    return <TableHeaderColumn key={index} dataField='_id' 
-                                    width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
-                                }
-                                return <TableHeaderColumn key={index} dataField={name} 
-                                width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
-                            })
+                           this.initCols(computedWidth, columns)
                         }
                     </BootstrapTable>
             </React.Fragment>
@@ -153,7 +190,7 @@ class Table extends Component {
 }
 
 export default withTracker((props) => {
-    Meteor.subscribe('Menu');
+    Meteor.subscribe(props.collectionName);
     let collection = new CollectionFactory().get(props.collectionName);
     return {
       data: collection.find({}).fetch(),

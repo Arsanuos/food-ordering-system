@@ -10,6 +10,8 @@ import NotFound from '../../ui/pages/not-found/NotFound.js';
 import Menu from '../../ui/pages/menu/Menu.js';
 
 import { Menu as MenuCollection, interface as MenuInterface } from '../../api/Menu/Menu.js';
+import { Orders as OrdersCollection, interface as OrdersInterface} from '../../api/orders/Orders.js';
+
 
 Meteor.startup(() => {
   
@@ -21,7 +23,7 @@ FlowRouter.route('/' , {
     if(Meteor.userId() == undefined){
       FlowRouter.go('SignIn');
     } else {
-      mount(App , {page: <Home />,
+      mount(App , {page: <Home collectionName={'orders'} database={OrdersInterface} validator={OrdersCollection.schema} />,
                   showNav: true});
     }
   }    

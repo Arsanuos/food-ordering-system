@@ -9,24 +9,28 @@ SimpleSchema.defineValidationErrorTransform(error => {
    return ddpError;
  });
 
-export const Menu = new Mongo.Collection('menu');
+export const Orders = new Mongo.Collection('orders');
 
-Menu.schema = new SimpleSchema({
+Orders.schema = new SimpleSchema({
     _id: String,
    name: String,
    price: Number,
+   delivered: Boolean,
 }, { requiredByDefault: false, check});
 
 
 export const interface = {
    insert: function(){
-       return 'menu.add';
+       return 'orders.add';
    },
    delete: function(){
-       return 'menu.remove';
+       return 'orders.remove';
    },
    update: function(){
-       return 'menu.update';
+       return 'orders.update';
+   },
+   markAsDelivered: function() {
+       return 'orders.delivered';
    }
 }
 

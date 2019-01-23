@@ -8,4 +8,8 @@ Meteor.startup(() => {
     Meteor.publish('Menu', function menuPublication() {
         return Menu.find();
     });
+
+    Meteor.publish('Orders', function ordersPublication() {
+        return Orders.find();
+    });
 });
