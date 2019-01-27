@@ -8,6 +8,8 @@ import Sign from '../../ui/pages/sign-in/Sign.js';
 import Home from '../../ui/pages/home/Home.js';
 import NotFound from '../../ui/pages/not-found/NotFound.js';
 import Menu from '../../ui/pages/menu/Menu.js';
+import Settings from '../../ui/pages/settings/Settings.js';
+
 
 import { Menu as MenuCollection, interface as MenuInterface } from '../../api/Menu/Menu.js';
 import { Orders as OrdersCollection, interface as OrdersInterface} from '../../api/orders/Orders.js';
@@ -29,7 +31,7 @@ FlowRouter.route('/' , {
   }    
 });
 
-FlowRouter.route('/SignIn', {
+FlowRouter.route('/signIn', {
   name: 'SignIn',
   action() {
     if(Meteor.userId() != undefined){
@@ -44,6 +46,13 @@ FlowRouter.route('/menu', {
   name: 'menu',
   action() {
     mount(App, {page: <Menu collectionName={'menu'} database={MenuInterface} validator={MenuCollection.schema} />, showNav:true})
+  }
+})
+
+FlowRouter.route('/settings', {
+  name: 'settings',
+  action() {
+    mount(App, {page: <Settings />, showNav:true})
   }
 })
 

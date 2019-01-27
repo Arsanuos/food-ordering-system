@@ -33,8 +33,8 @@ export default class Sign extends Component {
     render(){
         return (
         <div className="container" style={{paddingTop:90}}>
-            <div className="row justify-content-center">
-                <div className="col-md-6">
+			<div className="col-md-6 col-md-offset-3">
+                <div className="col-md-12">
                     <div className="panel panel-login">
                         <div className="panel-heading">
                             <div className="row">
@@ -64,8 +64,8 @@ export default class Sign extends Component {
                                         </div>
                                        
                                         <div className="form-group">
-                                            <div className="row justify-content-center">
-                                                <div className="col-sm-6">
+                                            <div className="row">
+                                                <div className="col-sm-6 col-md-offset-3">
                                                     <input type="submit" name="login-submit" id="login-submit" 
                                                     tabIndex="4" className="form-control btn btn-login" 
                                                     value="Log In" onClick={this.login}/>
@@ -74,7 +74,7 @@ export default class Sign extends Component {
                                         </div>
                                        
                                         <div className="form-group">
-                                            <div className="row justify-content-center">
+                                            <div className="row ">
                                                 <div className="col-lg-12">
                                                     <div className="text-center">
                                                         <a href="https://phpoll.com/recover" tabIndex="5" 
