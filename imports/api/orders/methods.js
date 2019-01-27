@@ -4,6 +4,7 @@ import check from 'meteor/check';
 
 Meteor.methods({
     'orders.add'(item){
+        item.userId = Meteor.userId();
         return Orders.insert(item);
     },
     'orders.remove'(itemId){

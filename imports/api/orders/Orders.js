@@ -15,6 +15,7 @@ Orders.schema = new SimpleSchema({
     _id: String,
    name: String,
    price: Number,
+   createdAt: Date,
    delivered: Boolean,
 }, { requiredByDefault: false, check});
 

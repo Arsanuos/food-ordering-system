@@ -139,7 +139,6 @@ class Table extends Component {
     rowClassNameFormat(row, rowIdx) {
         // row is whole row object
         // rowIdx is index of row
-        console.log(row.delivered);
         if(row.delivered == "Yes"){
             return 'line-through';
         }
@@ -147,6 +146,7 @@ class Table extends Component {
     }
 
     initCols(computedWidth, columns){
+        let menuPlatesNames = this.props.menuPlates;
         if(this.props.collectionName == 'menu'){
             return columns.map((name, index) => {
                 if(name == '_id'){
@@ -161,8 +161,12 @@ class Table extends Component {
                 if(name == '_id'){
                     return <TableHeaderColumn key={index} dataField='_id' 
                     width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
+                }else if(name == 'name'){
+                    return(<TableHeaderColumn dataField={name} key={index} width={computedWidth} dataSort={true} 
+                            editable={ { type: 'select', options: { values: menuPlatesNames } } }>{name}</TableHeaderColumn>)
                 }else if(name == 'delivered'){
-                    return (<TableHeaderColumn dataField='delivered' editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>);
+                    return (<TableHeaderColumn dataField='delivered' key={index} dataSort={true}
+                     editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>);
                 }
                 return <TableHeaderColumn key={index} dataField={name} 
                 width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
@@ -190,11 +194,17 @@ class Table extends Component {
 }
 
 export default withTracker((props) => {
+    Meteor.subscribe('menu');
+    let menuCollection = new CollectionFactory().get('menu');
+    let menuDataNames = menuCollection.find({});
     Meteor.subscribe(props.collectionName);
     let collection = new CollectionFactory().get(props.collectionName);
     return {
       data: collection.find({}).fetch(),
       collection: collection,
+      menuPlates: menuDataNames.map((row) => {
+        return row['name'] + row['price'];
+      }),
     };
 })(Table);
 

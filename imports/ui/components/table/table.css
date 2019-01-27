@@ -5,3 +5,7 @@
 .line-through {
     text-decoration: line-through
 }
+
+.modal-content {
+    margin-top: 100px;
+}
