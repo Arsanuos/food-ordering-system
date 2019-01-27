@@ -4,6 +4,8 @@ import './table.css';
 import {Meteor} from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import CollectionFactory from '../../../api/factory/Factory.js';
+import MenuTable from '../menu/MenuTable';
+import OrdersTable from '../orders/OrdersTable';
 
 
 class Table extends Component {
@@ -146,50 +148,25 @@ class Table extends Component {
     }
 
     initCols(computedWidth, columns){
+        let data = this.props.data;
         let menuPlatesNames = this.props.menuPlates;
         if(this.props.collectionName == 'menu'){
-            return columns.map((name, index) => {
-                if(name == '_id'){
-                    return <TableHeaderColumn key={index} dataField='_id' 
-                    width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
-                }
-                return <TableHeaderColumn key={index} dataField={name} 
-                width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
-            });
+            return(
+                <MenuTable data={data} cellEditProp={this.cellEditProp} 
+                rowClassNameFormat={this.rowClassNameFormat} options={this.options}></MenuTable>
+            );
         } else if(this.props.collectionName == 'orders'){
-            return columns.map((name, index) => {
-                if(name == '_id'){
-                    return <TableHeaderColumn key={index} dataField='_id' 
-                    width={computedWidth} isKey={false} dataSort={true} hidden autoValue>{name}</TableHeaderColumn>
-                }else if(name == 'name'){
-                    return(<TableHeaderColumn dataField={name} key={index} width={computedWidth} dataSort={true} 
-                            editable={ { type: 'select', options: { values: menuPlatesNames } } }>{name}</TableHeaderColumn>)
-                }else if(name == 'delivered'){
-                    return (<TableHeaderColumn dataField='delivered' key={index} dataSort={true}
-                     editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>);
-                }
-                return <TableHeaderColumn key={index} dataField={name} 
-                width={computedWidth} isKey={false} dataSort={true}>{name}</TableHeaderColumn>
-            });
+            return(
+                <OrdersTable data={data} cellEditProp={this.cellEditProp} 
+                    rowClassNameFormat={this.rowClassNameFormat} options={this.options} menuPlatesNames={menuPlatesNames}></OrdersTable>
+            );
         }
     }
 
     render() {
         let columns = this.getColumns();
         let computedWidth = 100 / (columns.length - 1) + "%";
-        let data = this.props.data;
-        return(
-            <React.Fragment>
-                <BootstrapTable data={data} cellEdit={ this.cellEditProp } striped={true} hover={true} height='700'
-                    scrollTop={ 'Bottom' } pagination search deleteRow={ true } 
-                    selectRow={ { mode: 'checkbox' } } insertRow={ true } exportCSV={ true }
-                    hover options={ this.options } keyField='_id' trClassName={this.rowClassNameFormat}>
-                        {
-                           this.initCols(computedWidth, columns)
-                        }
-                    </BootstrapTable>
-            </React.Fragment>
-        );
+        return this.initCols(computedWidth, columns);
     }
 }
 
@@ -203,7 +180,7 @@ export default withTracker((props) => {
       data: collection.find({}).fetch(),
       collection: collection,
       menuPlates: menuDataNames.map((row) => {
-        return row['name'] + row['price'];
+        return row['name'] + '  ' + '(' + row['price'] + ')';
       }),
     };
 })(Table);
