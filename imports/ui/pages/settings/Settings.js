@@ -11,7 +11,7 @@ class Settings extends Component {
 
     renderPlacesOptions(){
         return this.props.data.map((place) => {
-            return <option>place</option>
+            return (<option>place</option>)
         })
     }
     render(){

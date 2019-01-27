@@ -13,6 +13,7 @@ import Settings from '../../ui/pages/settings/Settings.js';
 
 import { Menu as MenuCollection, interface as MenuInterface } from '../../api/Menu/Menu.js';
 import { Orders as OrdersCollection, interface as OrdersInterface} from '../../api/orders/Orders.js';
+import { Settings as SettingsCollection, interface as SettingsInterface} from '../../api/settings/Settings.js';
 
 
 Meteor.startup(() => {
@@ -52,7 +53,7 @@ FlowRouter.route('/menu', {
 FlowRouter.route('/settings', {
   name: 'settings',
   action() {
-    mount(App, {page: <Settings />, showNav:true})
+    mount(App, {page: <Settings collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
   }
 })
 

@@ -2,3 +2,4 @@
 
 import '../../api/Menu/methods.js';
 import '../../api/orders/methods.js';
+import '../../api/settings/methods.js';
