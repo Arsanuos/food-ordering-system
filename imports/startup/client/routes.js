@@ -9,11 +9,13 @@ import Home from '../../ui/pages/home/Home.js';
 import NotFound from '../../ui/pages/not-found/NotFound.js';
 import Menu from '../../ui/pages/menu/Menu.js';
 import Settings from '../../ui/pages/settings/Settings.js';
+import Users from '../../ui/pages/users/Users.js';
 
 
 import { Menu as MenuCollection, interface as MenuInterface } from '../../api/Menu/Menu.js';
 import { Orders as OrdersCollection, interface as OrdersInterface} from '../../api/orders/Orders.js';
 import { Settings as SettingsCollection, interface as SettingsInterface} from '../../api/settings/Settings.js';
+import { interface as UsersInterface } from '../../api/users/Users.js';
 
 
 Meteor.startup(() => {
@@ -54,6 +56,14 @@ FlowRouter.route('/settings', {
   name: 'settings',
   action() {
     mount(App, {page: <Settings collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
+  }
+})
+
+
+FlowRouter.route('/users', {
+  name: 'users',
+  action() {
+    mount(App, {page: <Users collectionName={'users'} database={UsersInterface} validator={SettingsCollection.schema}/>, showNav:true})
   }
 })
 

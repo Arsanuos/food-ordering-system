@@ -18,4 +18,14 @@ Meteor.startup(() => {
     Meteor.publish('settings', function settingsPublication() {
         return Settings.find();
     });
+
+    Meteor.publish('users', function usersPublication() {
+        return Meteor.users.find({}, {fields:{'_id':1, 'username':1}});
+    })
+
+    Meteor.publish('roles', function (){
+        return Meteor.roles.find()
+    })
+
 });
+

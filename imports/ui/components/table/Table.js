@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import CollectionFactory from '../../../api/factory/Factory.js';
 import MenuTable from '../menu/MenuTable';
 import OrdersTable from '../orders/OrdersTable';
+import UsersTable from '../usersTable/UsersTable';
 
 
 class Table extends Component {
@@ -69,6 +70,7 @@ class Table extends Component {
         this.onAfterDeleteRow = this.onAfterDeleteRow.bind(this);
         this.delivered = this.delivered.bind(this);
         this.initCols = this.initCols.bind(this);
+        this.toggle = this.toggle.bind(this);
 
         this.state = {
             currentPage: 1,
@@ -128,8 +130,13 @@ class Table extends Component {
         return this.columns;
     }
 
-    toggle(){
-        Meteor.call(this.database.markAsDelivered());
+    toggle(e){
+        let val = e.target.value;
+        if(this.props.collectionName == 'orders'){
+            Meteor.call(this.database.markAsDelivered());
+        }else if(this.props.collectionName == 'users'){
+            Meteor.call(this.database.promote(), Meteor.userId(), val  == true ? 'admin' : 'worker');
+        }
     }
 
     delivered(cell, row, enumObject, index) {
@@ -160,6 +167,11 @@ class Table extends Component {
                 <OrdersTable data={data} cellEditProp={this.cellEditProp} 
                     rowClassNameFormat={this.rowClassNameFormat} options={this.options} menuPlatesNames={menuPlatesNames}></OrdersTable>
             );
+        } else if(this.props.collectionName == 'users'){
+            return(
+                <UsersTable data={data} cellEditProp={this.cellEditProp} 
+                    rowClassNameFormat={this.rowClassNameFormat} options={this.options}></UsersTable>
+            )
         }
     }
 

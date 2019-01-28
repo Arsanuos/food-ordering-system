@@ -1,29 +1,25 @@
-import Meteor from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Settings } from './settings.js';
 
 
 Meteor.methods({
-    'add-user'(user, settings){
+    'users.add'(user, settings){
         Accounts.createUser({
             username: user.username,
             password: user.password,
         });
-        Settings.insert(settings);
+        
     },
-    'promote'(userid, role){
-        if(role != 'admin' && role != 'worker'){
-            Roles.addUsersToRoles(userid, role, 'default-group');
-        }
+    'users.promote'(userid, role){
+        Roles.addUsersToRoles(userid, role, 'default-group');
     },
-    'change-user-name'(user){
-        Accounts.setUsername(user.userid, user.username);
+    'users.update-settings'(userid, newsettings){
+        let role = newsettings.admin == 'Yes' ? 'admin' : 'worker';
+        let prevRole = role == 'admin' ? 'worker' : 'admin';
+        Roles.addUsersToRoles(userid, role, 'default-group');
+        Roles.removeUsersFromRoles(userid, prevRole, 'default-group');
     },
-    'update-settings'(userid, newsettings){
-        Settings.update(userid, newsettings);
-    },
-    'fetch'(start, end, N){
-        return Meteor.users.find().skip(end - start + 1).limit(N);
+    'users.remove'(userId){
+        Meteor.users.remove(userId);
     }
-
 });

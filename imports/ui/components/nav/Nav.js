@@ -63,7 +63,7 @@ class Nav extends Component {
                   role="button" aria-haspopup="true" aria-expanded="false">Signed in as {username} <span className="caret"></span></a>
                   <ul className="dropdown-menu">
                     <li><a href="settings">Settings</a></li>
-                    <li><a href="purchases">Purchases</a></li>
+                    <li><a href="users">Users</a></li>
                     <li><a href="" onClick={this.logout}>Logout</a></li>
                   </ul>
                 </li>

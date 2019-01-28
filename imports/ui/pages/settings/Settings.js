@@ -7,6 +7,12 @@ class Settings extends Component {
 
     constructor(props){
         super(props);
+        this.renderPlacesOptions = this.renderPlacesOptions.bind(this);
+        this.save = this.save.bind(this);
+    }
+
+    save(){
+        Meteor.call(this.database.update(), )
     }
 
     renderPlacesOptions(){
@@ -31,7 +37,7 @@ class Settings extends Component {
                                 <div className="row">
                                     <input type="button" style={{marginTop:150}} name="save" id="login-submit" 
                                         className="btn btn-success btn-lg col-md-3 col-md-offset-9" 
-                                    value="Save" onClick={this.login}/>
+                                    value="Save" onClick={this.save}/>
                                 </div>
                             </div>
                     </div>
