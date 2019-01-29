@@ -63,8 +63,17 @@ class Nav extends Component {
                   role="button" aria-haspopup="true" aria-expanded="false">Signed in as {username} <span className="caret"></span></a>
                   <ul className="dropdown-menu">
                     <li><a href="settings">My Settings</a></li>
-                    <li><a href="users">Users</a></li>
-                    <li><a href="places">Places</a></li>
+                    {this.props.isAdmin ?
+                      (
+                        <React.Fragment>
+                          <li><a href="users">Users</a></li>
+                          <li><a href="places">Places</a></li>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                        </React.Fragment>
+                      )
+                    }
                     <li><a href="" onClick={this.logout}>Logout</a></li>
                   </ul>
                 </li>
@@ -79,6 +88,7 @@ class Nav extends Component {
 export default withTracker(() => {
   return {
     currentUser: Meteor.user(),
-    admin: Roles.userIsInRole(Meteor.user(), ['admin']) ? true : false,
+    isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin', 'default-group'),
+    isUser: Roles.userIsInRole(Meteor.userId(), 'user', 'default-group'),
   };
 })(Nav);

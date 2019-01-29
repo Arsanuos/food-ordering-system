@@ -26,6 +26,5 @@ Meteor.methods({
         Meteor.users.update(userId, {$set:{
             'profile':newSettings,
         }});
-        console.log(newSettings);
     }
 });
