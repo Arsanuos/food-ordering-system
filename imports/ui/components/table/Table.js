@@ -7,6 +7,7 @@ import CollectionFactory from '../../../api/factory/Factory.js';
 import MenuTable from '../menu/MenuTable';
 import OrdersTable from '../orders/OrdersTable';
 import UsersTable from '../usersTable/UsersTable';
+import PlaceTable from '../placeTable/PlaceTable';
 
 
 class Table extends Component {
@@ -171,6 +172,11 @@ class Table extends Component {
             return(
                 <UsersTable data={data} cellEditProp={this.cellEditProp} 
                     rowClassNameFormat={this.rowClassNameFormat} options={this.options}></UsersTable>
+            )
+        } else if(this.props.collectionName == 'settings'){
+            return (
+                <PlaceTable data={data} cellEditProp={this.cellEditProp} 
+                    rowClassNameFormat={this.rowClassNameFormat} options={this.options}></PlaceTable>
             )
         }
     }

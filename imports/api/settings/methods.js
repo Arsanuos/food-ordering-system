@@ -4,6 +4,7 @@ import check from 'meteor/check';
 
 Meteor.methods({
     'settings.add'(item){
+        console.log(item);
         return Settings.insert(item);
     },
     'settings.remove'(itemId){

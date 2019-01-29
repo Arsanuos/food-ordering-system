@@ -26,8 +26,6 @@ export default class UsersTable extends Component {
         let cellEditProp = this.props.cellEditProp
         let rowClassNameFormat = this.props.rowClassNameFormat;
         let options = this.props.options;
-        console.log(data);
-
         return(
             <BootstrapTable data={data} cellEdit={ cellEditProp } striped={true} hover={true} height='700'
                     scrollTop={ 'Bottom' } pagination search deleteRow={ true } 

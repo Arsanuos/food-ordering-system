@@ -21,5 +21,11 @@ Meteor.methods({
     },
     'users.remove'(userId){
         Meteor.users.remove(userId);
+    },
+    'users.update-place'(userId, newSettings){
+        Meteor.users.update(userId, {$set:{
+            'profile':newSettings,
+        }});
+        console.log(newSettings);
     }
 });

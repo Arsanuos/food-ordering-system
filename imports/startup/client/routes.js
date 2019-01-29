@@ -10,6 +10,7 @@ import NotFound from '../../ui/pages/not-found/NotFound.js';
 import Menu from '../../ui/pages/menu/Menu.js';
 import Settings from '../../ui/pages/settings/Settings.js';
 import Users from '../../ui/pages/users/Users.js';
+import Places from '../../ui/pages/places/Places.js';
 
 
 import { Menu as MenuCollection, interface as MenuInterface } from '../../api/Menu/Menu.js';
@@ -64,6 +65,13 @@ FlowRouter.route('/users', {
   name: 'users',
   action() {
     mount(App, {page: <Users collectionName={'users'} database={UsersInterface} validator={SettingsCollection.schema}/>, showNav:true})
+  }
+})
+
+FlowRouter.route('/places', {
+  name: 'users',
+  action() {
+    mount(App, {page: <Places collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
   }
 })
 

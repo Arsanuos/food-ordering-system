@@ -62,8 +62,9 @@ class Nav extends Component {
                   <a href="#" className="dropdown-toggle" data-toggle="dropdown" 
                   role="button" aria-haspopup="true" aria-expanded="false">Signed in as {username} <span className="caret"></span></a>
                   <ul className="dropdown-menu">
-                    <li><a href="settings">Settings</a></li>
+                    <li><a href="settings">My Settings</a></li>
                     <li><a href="users">Users</a></li>
+                    <li><a href="places">Places</a></li>
                     <li><a href="" onClick={this.logout}>Logout</a></li>
                   </ul>
                 </li>
