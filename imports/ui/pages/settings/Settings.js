@@ -59,7 +59,6 @@ class Settings extends Component {
     }
 
     renderPlacesOptions(){
-        console.log(this.props.userData);
         return this.props.data.map((place, index) => {
             return (<option key={index} value={place.PlaceName}>{place.PlaceName}</option>);
         })
