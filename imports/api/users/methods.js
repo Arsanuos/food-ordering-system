@@ -5,16 +5,17 @@ import { Accounts } from 'meteor/accounts-base'
 Meteor.methods({
     'users.add'(user, role){
         let userid = Accounts.createUser(user);
-        Roles.setUserRoles(userid, role, 'default-group');
+        Roles.addUsersToRoles(userid, role, 'default-group');
         return userid;
     },
     'users.promote'(userid, role){
         Roles.addUsersToRoles(userid, role, 'default-group');
     },
     'users.update-settings'(userid, newsettings){
-        let role = newsettings.admin == 'Yes' ? 'admin' : 'worker';
-        let prevRole = role == 'admin' ? 'worker' : 'admin';
+        let role = newsettings.role;
         Roles.setUserRoles(userid, role, 'default-group');
+        //Roles.addUsersToRoles(userid, role, 'default-group');
+        //let prevRole = role == 'admin' ? 'worker' : 'admin';
         //Roles.removeUsersFromRoles(userid, prevRole, 'default-group');
     },
     'users.remove'(userId){

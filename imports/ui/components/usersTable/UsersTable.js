@@ -1,31 +1,43 @@
 import React, {Component} from 'react';
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class UsersTable extends Component {
+class UsersTable extends Component {
 
     constructor(props){
         super(props);
         this.addAdminColumnToData = this.addAdminColumnToData.bind(this);
+        this.getRoles = this.getRoles.bind(this);
     }
 
     addAdminColumnToData(data) {
         Meteor.subscribe('roles');
         return data.map((row) => {
-            if(Roles.userIsInRole(row['_id'], ['admin'], 'default-group')){
-                row.admin = 'Yes';
-            }else{
-                row.admin = 'No';
+            console.log(row);
+            let x = {};
+            x.username = row.username;
+            x._id = row._id;
+            if(row.roles != undefined){
+                x.role = row.roles['default-group'][0]
             }
-            return row;
+            return x;
         });        
+    }
+
+    getRoles(){
+        return this.props.roles.map((role, index) => {
+            return role.name;
+        })
     }
 
     render() {
         let computedWidth = 100/(3 - 1) + " %";
         let data = this.addAdminColumnToData(this.props.data);
+        //let data = this.props.data;
         let cellEditProp = this.props.cellEditProp
         let rowClassNameFormat = this.props.rowClassNameFormat;
         let options = this.props.options;
+        let roles = this.getRoles();
         return(
             <BootstrapTable data={data} cellEdit={ cellEditProp } striped={true} hover={true} height='700'
                     scrollTop={ 'Bottom' } pagination search deleteRow={ true } 
@@ -35,9 +47,15 @@ export default class UsersTable extends Component {
                     <TableHeaderColumn dataField='_id' 
                         width={computedWidth} isKey={false} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
                     <TableHeaderColumn dataField='username' width={computedWidth} dataSort={true} editable={{readOnly:true}}>User Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField='admin' dataSort={true} width={computedWidth}
-                            editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Admin</TableHeaderColumn>
+                    <TableHeaderColumn dataField='role' width={computedWidth} dataSort={true} 
+                            editable={ { type: 'select', options: { values: roles } } }>Role Name</TableHeaderColumn>
             </BootstrapTable>
         )
     }
 }
+
+export default withTracker((props) => {
+    return {
+      roles: Roles.getAllRoles().fetch(),
+    };
+})(UsersTable);

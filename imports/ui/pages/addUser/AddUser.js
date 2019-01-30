@@ -3,7 +3,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import CollectionFactory from '../../../api/factory/Factory.js';
 import {Meteor} from 'meteor/meteor';
 import Alert from 'react-s-alert';
-import { Accounts } from 'meteor/accounts-base'
 
 class AddUser extends Component {
 
@@ -32,7 +31,7 @@ class AddUser extends Component {
                 password:password,
                 profile:{
                     placeName: currentPlace,
-                }
+                },
             };
             Meteor.call('users.add', user, role, (err, data) => {
                 if(err){
