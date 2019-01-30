@@ -23,7 +23,7 @@ Meteor.startup(() => {
         return Meteor.users.find({}, {fields:{'_id':1, 'username':1, 'profile':1}});
     })
     
-    Meteor.publish('roles', function (){
+    Meteor.publish(null, function (){
         return Meteor.roles.find()
     })
 

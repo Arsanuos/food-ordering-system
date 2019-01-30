@@ -68,6 +68,7 @@ class Nav extends Component {
                         <React.Fragment>
                           <li><a href="users">Users</a></li>
                           <li><a href="places">Places</a></li>
+                          <li><a href="addUser">Create User</a></li>
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
