@@ -31,7 +31,7 @@ class UsersTable extends Component {
     }
 
     render() {
-        let computedWidth = 100/6 + " %";
+        let computedWidth = 100/(3 - 1) + " %";
         let data = this.addAdminColumnToData(this.props.data);
         //let data = this.props.data;
         let cellEditProp = this.props.cellEditProp
@@ -45,9 +45,9 @@ class UsersTable extends Component {
                     hover options={ options } keyField='_id' trClassName={rowClassNameFormat}> 
                     
                     <TableHeaderColumn dataField='_id' 
-                        isKey={false} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
-                    <TableHeaderColumn dataField='username'  dataSort={true} editable={{readOnly:true}}>User Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField='role'  dataSort={true} 
+                        width={computedWidth} isKey={false} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
+                    <TableHeaderColumn dataField='username' width={computedWidth} dataSort={true} editable={{readOnly:true}}>User Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='role' width={computedWidth} dataSort={true} 
                             editable={ { type: 'select', options: { values: roles } } }>Role Name</TableHeaderColumn>
             </BootstrapTable>
         )
