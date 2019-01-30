@@ -31,14 +31,14 @@ export default class OrdersTable extends Component {
                     selectRow={ { mode: 'checkbox' } } insertRow={ true } exportCSV={ true }
                     hover options={ options } keyField='_id' trClassName={rowClassNameFormat}> 
                     
-                    <TableHeaderColumn dataField='_id' 
+                    <TableHeaderColumn dataField='_id' style={{whiteSpace: 'nowrap'}}
                         width={computedWidth} isKey={false} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
-                    <TableHeaderColumn dataField='name' width={computedWidth} dataSort={true} 
+                    <TableHeaderColumn dataField='name' width={computedWidth} dataSort={true} style={{whiteSpace: 'nowrap'}} 
                             editable={ { type: 'select', options: { values: menuPlatesNames } } }>Plate Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField='createdAt' 
+                    <TableHeaderColumn dataField='createdAt' style={{whiteSpace: 'nowrap'}}
                         width={computedWidth} editable={{type: 'text', defaultValue: this.currentDate()}}
                          isKey={false} dataSort={true}>Created At</TableHeaderColumn>
-                    <TableHeaderColumn dataField='delivered' dataSort={true} width={computedWidth}
+                    <TableHeaderColumn dataField='delivered' dataSort={true} width={computedWidth} style={{whiteSpace: 'nowrap'}}
                             editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>
             </BootstrapTable>
         )

@@ -13,9 +13,11 @@ class AddUser extends Component {
         this.renderAllRoles = this.renderAllRoles.bind(this);
         this.showError = this.showError.bind(this);
         this.showSuccess = this.showSuccess.bind(this);
+        this.handleOnChangeRole = this.handleOnChangeRole.bind(this);
         this.state = {
             currentPlace: null,
             role: null,
+            defaultRole: 'user',
         }
     }
 
@@ -43,6 +45,12 @@ class AddUser extends Component {
         } else {
             this.showError("can't create user.")
         }
+    }
+
+    handleOnChangeRole(){
+        this.setState({
+            defaultRole: this.refs.roles.value,
+        })
     }
 
     showSuccess(msg) {
@@ -93,7 +101,7 @@ class AddUser extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="Name">Role</label>
-                            <select className="form-control" ref='roles' value={'user'}>
+                            <select className="form-control" ref='roles' value={this.state.defaultRole} onChange={this.handleOnChangeRole}>
                                 {
                                     this.renderAllRoles()
                                 }
