@@ -62,6 +62,7 @@ class AddUser extends Component {
     }
 
     renderPlacesOptions(){
+        //Roles.createRole('user');
         return this.props.data.map((place, index) => {
             return (<option key={index} value={place.PlaceName}>{place.PlaceName}</option>);
         })
@@ -92,7 +93,7 @@ class AddUser extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="Name">Role</label>
-                            <select className="form-control" ref='roles'>
+                            <select className="form-control" ref='roles' value={'user'}>
                                 {
                                     this.renderAllRoles()
                                 }
