@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
+import Alert from 'react-s-alert';
 
 class OrdersTable extends Component {
 
     constructor(props){
         super(props);
         this.currentDate = this.currentDate.bind(this);
+        this.state = {
+            notify:this.props.change,
+        }
     }
 
     currentDate(cell, row){
-        console.log(row);
         if(!cell){
 
             let currentdate = new Date(); 
