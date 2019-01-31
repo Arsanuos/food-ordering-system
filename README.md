@@ -14,6 +14,7 @@ A meteor reactive data system for food ordering that was designed for internal u
 * `git clone https://github.com/Arsanuos/food-ordering-system.git`
 * `cd food-ordering-system`
 * `meteor`
+* Open your http://localhost:3000/ on your browser.
 
 ## Features
 * Responsive design
