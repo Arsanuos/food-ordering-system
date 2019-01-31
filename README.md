@@ -6,6 +6,7 @@ A meteor reactive data system for food ordering that was designed for internal u
 * [React](https://github.com/facebook/react).
 * [Minimongo](https://github.com/mWater/minimongo)
 * [React data tracker](https://github.com/meteor/react-packages/tree/devel/packages/react-meteor-data).
+* [React bootstrap table](https://github.com/AllenFang/react-bootstrap-table)
 
 ## How to use
 
