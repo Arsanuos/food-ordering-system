@@ -8,7 +8,7 @@ class OrdersTable extends Component {
         this.currentDate = this.currentDate.bind(this);
     }
 
-    currentDate(){
+    currentDate(cell, row){
         let currentdate = new Date(); 
         let datetime =  currentdate.getDate() + "/"
                         + (currentdate.getMonth()+1)  + "/" 
@@ -18,6 +18,7 @@ class OrdersTable extends Component {
                         + currentdate.getSeconds();
         return datetime; 
     }
+
 
     render() {
         let computedWidth = 100/(4 - 1) + " %";
@@ -30,15 +31,23 @@ class OrdersTable extends Component {
             <BootstrapTable data={data} cellEdit={ cellEditProp } striped={true} hover={true} height='700'
                     scrollTop={ 'Bottom' } pagination search deleteRow={this.props.isWorker ? false : true } 
                     selectRow={ this.props.isWorker ? {} : { mode: 'checkbox' } } insertRow={this.props.isWorker ? false: true} exportCSV={ true }
-                    hover options={ options } keyField='_id' trClassName={rowClassNameFormat}> 
+                    hover options={ options } keyField='_id' trClassName={rowClassNameFormat} defaultSorted={[{id: "delivered", desc: true}]}> 
                     
                     <TableHeaderColumn dataField='_id' 
                         width={computedWidth} isKey={false} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
                     <TableHeaderColumn dataField='name' width={computedWidth} dataSort={true} 
                             editable={ { type: 'select', options: { values: menuPlatesNames }, readOnly:this.props.isWorker } }>Plate Name</TableHeaderColumn>
                     <TableHeaderColumn dataField='createdAt' 
-                        width={computedWidth} editable={{type: 'text', defaultValue: this.currentDate(), readOnly:true}}
-                         isKey={false} dataSort={true}>Created At</TableHeaderColumn>
+                        width={computedWidth} editable={{type: 'text', readOnly:true}}  dataFormat={this.currentDate}
+                         isKey={false} dataSort={true} hiddenOnInsert>Created At</TableHeaderColumn>
+                    {this.props.isWorker ? (
+                        <TableHeaderColumn dataField='place' width={computedWidth} dataSort={true} 
+                            editable={ {readOnly:true} }>Place</TableHeaderColumn>
+                    ) : (
+                        null
+                    )
+
+                    }
                     <TableHeaderColumn dataField='delivered' dataSort={true} width={computedWidth}
                             editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>
             </BootstrapTable>

@@ -1,10 +1,9 @@
 import {Settings} from './Settings.js';
 import { Meteor } from 'meteor/meteor';
-import check from 'meteor/check';
+import { check } from 'meteor/check'
 
 Meteor.methods({
     'settings.add'(item){
-        console.log(item);
         return Settings.insert(item);
     },
     'settings.remove'(itemId){

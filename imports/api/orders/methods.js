@@ -1,10 +1,11 @@
 import {Orders} from './Orders.js';
 import { Meteor } from 'meteor/meteor';
-import check from 'meteor/check';
+import { check } from 'meteor/check'
 
 Meteor.methods({
     'orders.add'(item){
         item.userId = Meteor.userId();
+        item.place = Meteor.users.findOne({'_id':Meteor.userId()}).profile.placeName;
         return Orders.insert(item);
     },
     'orders.remove'(itemId){

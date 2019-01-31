@@ -31,7 +31,7 @@ class Table extends Component {
             deleteText: 'Delete Row',
             mode: 'click',
             blurToSave: true,
-            afterSaveCell: function(row, cellName, cellValue) {
+            afterSaveCell: (row, cellName, cellValue) => {
                 Meteor.call(database.update(), row._id, row);
             }
         };
@@ -155,7 +155,7 @@ class Table extends Component {
         return '';
     }
 
-    initCols(computedWidth, columns){
+    initCols(){
         let data = this.props.data;
         let menuPlatesNames = this.props.menuPlates;
         if(this.props.collectionName == 'menu'){
@@ -182,9 +182,7 @@ class Table extends Component {
     }
 
     render() {
-        let columns = this.getColumns();
-        let computedWidth = 100 / (columns.length - 1) + "%";
-        return this.initCols(computedWidth, columns);
+        return this.initCols();
     }
 }
 

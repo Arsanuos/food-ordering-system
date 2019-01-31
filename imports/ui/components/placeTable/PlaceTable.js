@@ -3,6 +3,17 @@ import React, {Component} from 'react';
 
 export default class PlaceTable extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
+    placeNameValidator(value, row){
+        if (!value) {
+            return 'Place is required.';
+        }
+        return true;
+    }
+
     render(){
         let computedWidth = 100/(2 - 1) + " %";
         let data = this.props.data;
@@ -18,7 +29,7 @@ export default class PlaceTable extends Component {
                     <TableHeaderColumn dataField='_id' 
                         width={computedWidth} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
                     <TableHeaderColumn dataField='PlaceName' 
-                        width={computedWidth} isKey={false} dataSort={true}>Place Name</TableHeaderColumn>
+                        width={computedWidth} isKey={false} dataSort={true} editable={{validator:this.placeNameValidator}}>Place Name</TableHeaderColumn>
 
             </BootstrapTable>
         );
