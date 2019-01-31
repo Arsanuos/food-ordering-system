@@ -7,6 +7,13 @@ A meteor reactive data system for food ordering that was designed for internal u
 * [Minimongo](https://github.com/mWater/minimongo)
 * [React data tracker](https://github.com/meteor/react-packages/tree/devel/packages/react-meteor-data).
 
+## How to use
+
+* Install Meteor from [here](http://meteor.com).
+* `git clone https://github.com/Arsanuos/food-ordering-system.git`
+* `cd food-ordering-system`
+* `meteor`
+
 ## Features
 * Responsive design
 ![](videos/responsive.gif)
@@ -26,3 +33,4 @@ A meteor reactive data system for food ordering that was designed for internal u
 ![](videos/manage-roles.gif)
 
 ## Licence
+All code is licensed under the MIT License.
