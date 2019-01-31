@@ -75,39 +75,36 @@ class Settings extends Component {
     }
 
     renderPlaceChooser(){
-        if(this.props.isAdmin || this.props.isUser){
-            let currentPlace = this.getCurrentPlace();
-            return(
-                <div className="row">
-                    <div className="form-group col-sm-12">
-                        <label htmlFor="Name">Choose place name</label>
-                        <select className="form-control" ref='placeName' value={currentPlace} onChange={this.handleSelectChange}>
-                            {
-                                this.renderPlacesOptions()
-                            }
-                        </select>
-                    </div>
-                    <div className="col-sm-12 form-group">
-                        <label htmlFor="password">Old Password</label>
-                        <input type="password" className="form-control" ref='oldPassword'/>
-                    </div>
-                    <div className="col-sm-12 form-group">
-                        <label htmlFor="newPassword">New Password</label>
-                        <input type="password" className="form-control" ref='newPassword'/>
-                    </div>
-                    <div className="col-sm-12 form-group">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input type="password" className="form-control" ref='confirmNewPassword'/>
-                    </div>
-                    <div className="col-sm-12 form-group">
-                        <input type="button" name="save"
-                            className="btn btn-success btn-lg col-md-3 col-md-offset-9" 
-                            value="Save" onClick={this.save}/>
-                    </div>
+        let currentPlace = this.getCurrentPlace();
+        return(
+            <div className="row">
+                <div className="form-group col-sm-12" hidden={(this.props.isWorker) ? true : false}> 
+                    <label htmlFor="Name">Choose place name</label>
+                    <select className="form-control" ref='placeName' value={currentPlace} onChange={this.handleSelectChange}>
+                        {
+                            this.renderPlacesOptions()
+                        }
+                    </select>
                 </div>
-            );
-        }
-        return;
+                <div className="col-sm-12 form-group">
+                    <label htmlFor="password">Old Password</label>
+                    <input type="password" className="form-control" ref='oldPassword'/>
+                </div>
+                <div className="col-sm-12 form-group">
+                    <label htmlFor="newPassword">New Password</label>
+                    <input type="password" className="form-control" ref='newPassword'/>
+                </div>
+                <div className="col-sm-12 form-group">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input type="password" className="form-control" ref='confirmNewPassword'/>
+                </div>
+                <div className="col-sm-12 form-group">
+                    <input type="button" name="save"
+                        className="btn btn-success btn-lg col-md-3 col-md-offset-9" 
+                        value="Save" onClick={this.save}/>
+                </div>
+            </div>
+        );
     }
 
     render(){
@@ -133,6 +130,7 @@ export default withTracker((props) => {
       data: collection.find({}).fetch(),
       isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin', 'default-group'),
       isUser: Roles.userIsInRole(Meteor.userId(), 'user', 'default-group'),
+      isWorker: Roles.userIsInRole(Meteor.userId(), 'worker', 'default-group'),
       userData: Meteor.users.findOne({'_id':Meteor.userId()}),
       currentPlace: currentPlace,
     };

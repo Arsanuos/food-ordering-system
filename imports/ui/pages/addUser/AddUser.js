@@ -107,7 +107,7 @@ class AddUser extends Component {
                                 }
                             </select>
                         </div>
-                        <div className="form-group">
+                        <div className="form-group" hidden={(this.state.defaultRole == 'worker') ? true : false}>
                             <label htmlFor="Name">Choose place name</label>
                             <select className="form-control" ref='currentPlace'>
                                 {

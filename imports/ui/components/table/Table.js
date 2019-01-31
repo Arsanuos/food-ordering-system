@@ -194,8 +194,14 @@ export default withTracker((props) => {
     let menuDataNames = menuCollection.find({});
     Meteor.subscribe(props.collectionName);
     let collection = new CollectionFactory().get(props.collectionName);
+    let data;
+    if(props.collectionName == 'orders' && Roles.userIsInRole(Meteor.userId(), 'worker', 'default-group')){
+        data = collection.find({'delivered':'No'}).fetch();
+    }else{
+        data = collection.find({}).fetch();
+    }
     return {
-      data: collection.find({}).fetch(),
+      data: data,
       collection: collection,
       menuPlates: menuDataNames.map((row) => {
         return row['name'] + '  ' + '(' + row['price'] + ')';

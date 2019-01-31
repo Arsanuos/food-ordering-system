@@ -53,7 +53,7 @@ class Nav extends Component {
         
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav">
-                <li><a href="/">My Orders</a></li>
+                <li><a href="/">My Orders</a></li> 
                 <li><a href="menu">Menu </a></li>
               </ul>
               <ul className="nav navbar-nav navbar-right">
@@ -71,8 +71,7 @@ class Nav extends Component {
                           <li><a href="addUser">Create User</a></li>
                         </React.Fragment>
                       ) : (
-                        <React.Fragment>
-                        </React.Fragment>
+                        null
                       )
                     }
                     <li><a href="" onClick={this.logout}>Logout</a></li>
@@ -91,5 +90,6 @@ export default withTracker(() => {
     currentUser: Meteor.user(),
     isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin', 'default-group'),
     isUser: Roles.userIsInRole(Meteor.userId(), 'user', 'default-group'),
+    isWorker: Roles.userIsInRole(Meteor.userId(), 'worker', 'default-group'),
   };
 })(Nav);

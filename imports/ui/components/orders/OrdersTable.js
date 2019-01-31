@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class OrdersTable extends Component {
+class OrdersTable extends Component {
 
     constructor(props){
         super(props);
@@ -27,16 +28,16 @@ export default class OrdersTable extends Component {
         let menuPlatesNames = this.props.menuPlatesNames;
         return(
             <BootstrapTable data={data} cellEdit={ cellEditProp } striped={true} hover={true} height='700'
-                    scrollTop={ 'Bottom' } pagination search deleteRow={ true } 
-                    selectRow={ { mode: 'checkbox' } } insertRow={ true } exportCSV={ true }
+                    scrollTop={ 'Bottom' } pagination search deleteRow={this.props.isWorker ? false : true } 
+                    selectRow={ this.props.isWorker ? false : true } insertRow={this.props.isWorker ? false: true} exportCSV={ true }
                     hover options={ options } keyField='_id' trClassName={rowClassNameFormat}> 
                     
                     <TableHeaderColumn dataField='_id' 
                         width={computedWidth} isKey={false} dataSort={true} hidden autoValue>Id</TableHeaderColumn>
                     <TableHeaderColumn dataField='name' width={computedWidth} dataSort={true} 
-                            editable={ { type: 'select', options: { values: menuPlatesNames } } }>Plate Name</TableHeaderColumn>
+                            editable={ { type: 'select', options: { values: menuPlatesNames }, readOnly:this.props.isWorker } }>Plate Name</TableHeaderColumn>
                     <TableHeaderColumn dataField='createdAt' 
-                        width={computedWidth} editable={{type: 'text', defaultValue: this.currentDate()}}
+                        width={computedWidth} editable={{type: 'text', defaultValue: this.currentDate(), readOnly:true}}
                          isKey={false} dataSort={true}>Created At</TableHeaderColumn>
                     <TableHeaderColumn dataField='delivered' dataSort={true} width={computedWidth}
                             editable={ { type: 'checkbox', options: { values: 'Yes:No' } } }>Delivered</TableHeaderColumn>
@@ -44,3 +45,12 @@ export default class OrdersTable extends Component {
         )
     }
 }
+
+export default withTracker((props) => {
+
+    return {
+        isAdmin: Roles.userIsInRole(Meteor.userId(), 'admin', 'default-group'),
+        isUser: Roles.userIsInRole(Meteor.userId(), 'user', 'default-group'),
+        isWorker: Roles.userIsInRole(Meteor.userId(), 'worker', 'default-group'),
+    }
+})(OrdersTable);

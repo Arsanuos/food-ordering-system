@@ -11,7 +11,10 @@ Meteor.startup(() => {
     });
     
     Meteor.publish('orders', function ordersPublication() {
-        return Orders.find();
+        if(Roles.userIsInRole(Meteor.userId(), 'worker', 'default-group')){
+            return Orders.find({}, {sort:{delivered:1}});
+        }
+        return Orders.find({'userId':Meteor.userId()}, {sort:{delivered:1}});
     });
     
     Meteor.publish('settings', function settingsPublication() {
