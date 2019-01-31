@@ -6,6 +6,8 @@ Meteor.methods({
     'orders.add'(item){
         item.userId = Meteor.userId();
         item.place = Meteor.users.findOne({'_id':Meteor.userId()}).profile.placeName;
+        let currentdate = new Date().toLocaleString();
+        item.createdAt = currentdate;
         return Orders.insert(item);
     },
     'orders.remove'(itemId){

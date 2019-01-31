@@ -6,6 +6,14 @@ import { Orders } from '../../api/orders/Orders.js';
 import { Settings } from '../../api/settings/Settings.js';
 
 Meteor.startup(() => {
+
+    let roles = Roles.getAllRoles({}).fetch();
+    if(roles.length == 0){
+        Roles.createRole('user');
+        Roles.createRole('admin');
+        Roles.createRole('worker');
+    }
+
     Meteor.publish('menu', function menuPublication() {
         return Menu.find();
     });

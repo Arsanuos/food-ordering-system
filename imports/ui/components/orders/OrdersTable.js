@@ -9,14 +9,19 @@ class OrdersTable extends Component {
     }
 
     currentDate(cell, row){
-        let currentdate = new Date(); 
-        let datetime =  currentdate.getDate() + "/"
-                        + (currentdate.getMonth()+1)  + "/" 
-                        + currentdate.getFullYear() + " @ "  
-                        + currentdate.getHours() + ":"  
-                        + currentdate.getMinutes() + ":" 
-                        + currentdate.getSeconds();
-        return datetime; 
+        console.log(row);
+        if(!cell){
+
+            let currentdate = new Date(); 
+            let datetime =  currentdate.getDate() + "/"
+            + (currentdate.getMonth()+1)  + "/" 
+            + currentdate.getFullYear() + " @ "  
+            + currentdate.getHours() + ":"  
+            + currentdate.getMinutes() + ":" 
+            + currentdate.getSeconds();
+            return datetime;
+        }
+        return cell; 
     }
 
 
@@ -38,7 +43,7 @@ class OrdersTable extends Component {
                     <TableHeaderColumn dataField='name' width={computedWidth} dataSort={true} 
                             editable={ { type: 'select', options: { values: menuPlatesNames }, readOnly:this.props.isWorker } }>Plate Name</TableHeaderColumn>
                     <TableHeaderColumn dataField='createdAt' 
-                        width={computedWidth} editable={{type: 'text', readOnly:true}}  dataFormat={this.currentDate}
+                        width={computedWidth} editable={{type: 'text', readOnly:true}}
                          isKey={false} dataSort={true} hiddenOnInsert>Created At</TableHeaderColumn>
                     {this.props.isWorker ? (
                         <TableHeaderColumn dataField='place' width={computedWidth} dataSort={true} 
