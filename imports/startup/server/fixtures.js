@@ -7,11 +7,24 @@ import { Settings } from '../../api/settings/Settings.js';
 
 Meteor.startup(() => {
 
-    let roles = Roles.getAllRoles({}).fetch();
-    if(roles.length == 0){
+    let rolesCount = Roles.getAllRoles({}).count();
+    if(rolesCount == 0){
         Roles.createRole('user');
         Roles.createRole('admin');
         Roles.createRole('worker');
+    }
+
+    let usersCount = Meteor.users.find({}).count();
+    if(usersCount == 0){
+        let user = {
+            username: 'admin',
+            password: 'admin',
+            profile: {
+                placeName: "",
+            }
+        }
+        let userid = Accounts.createUser(user);
+        Roles.addUsersToRoles(userid, 'admin', 'default-group');
     }
 
     Meteor.publish('menu', function menuPublication() {
