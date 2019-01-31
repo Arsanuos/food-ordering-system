@@ -50,14 +50,22 @@ FlowRouter.route('/signIn', {
 FlowRouter.route('/menu', {
   name: 'menu',
   action() {
-    mount(App, {page: <Menu collectionName={'menu'} database={MenuInterface} validator={MenuCollection.schema} />, showNav:true})
+    if(Meteor.userId() == undefined ){
+      FlowRouter.go('SignIn');
+    } else {
+      mount(App, {page: <Menu collectionName={'menu'} database={MenuInterface} validator={MenuCollection.schema} />, showNav:true})
+    }
   }
 })
 
 FlowRouter.route('/settings', {
   name: 'settings',
   action() {
-    mount(App, {page: <Settings collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
+    if(Meteor.userId() == undefined){
+      FlowRouter.go('SignIn');
+    } else {
+      mount(App, {page: <Settings collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
+    }
   }
 })
 
@@ -65,21 +73,33 @@ FlowRouter.route('/settings', {
 FlowRouter.route('/users', {
   name: 'users',
   action() {
-    mount(App, {page: <Users collectionName={'users'} database={UsersInterface} validator={SettingsCollection.schema}/>, showNav:true})
+    if(Meteor.userId() == undefined){
+      FlowRouter.go('SignIn');
+    } else {
+      mount(App, {page: <Users collectionName={'users'} database={UsersInterface} validator={SettingsCollection.schema}/>, showNav:true})
+    }
   }
 })
 
 FlowRouter.route('/places', {
   name: 'users',
   action() {
-    mount(App, {page: <Places collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
+    if(Meteor.userId() == undefined){
+      FlowRouter.go('SignIn');
+    } else {
+      mount(App, {page: <Places collectionName={'settings'} database={SettingsInterface} validator={SettingsCollection.schema}/>, showNav:true})
+    }
   }
 })
 
 FlowRouter.route('/AddUser', {
   name: 'users',
   action() {
-    mount(App, {page: <AddUser collectionName={'settings'} />, showNav:true})
+    if(Meteor.userId() == undefined){
+      FlowRouter.go('SignIn');
+    } else {
+      mount(App, {page: <AddUser collectionName={'settings'} />, showNav:true})
+    }
   }
 })
 

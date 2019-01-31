@@ -29,7 +29,7 @@ class OrdersTable extends Component {
         return(
             <BootstrapTable data={data} cellEdit={ cellEditProp } striped={true} hover={true} height='700'
                     scrollTop={ 'Bottom' } pagination search deleteRow={this.props.isWorker ? false : true } 
-                    selectRow={ this.props.isWorker ? false : { mode: 'checkbox' } } insertRow={this.props.isWorker ? false: true} exportCSV={ true }
+                    selectRow={ this.props.isWorker ? {} : { mode: 'checkbox' } } insertRow={this.props.isWorker ? false: true} exportCSV={ true }
                     hover options={ options } keyField='_id' trClassName={rowClassNameFormat}> 
                     
                     <TableHeaderColumn dataField='_id' 

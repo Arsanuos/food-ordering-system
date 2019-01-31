@@ -83,6 +83,9 @@ class AddUser extends Component {
     }
 
     render() {
+        if(!this.props.isAdmin){
+            FlowRouter.go('Home');
+        }
         return (
             <div className="container">
                 <div className="row">
