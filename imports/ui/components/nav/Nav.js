@@ -24,8 +24,8 @@ class Nav extends Component {
     renderAdmin(admin){
       if(Meteor.userId() && admin){
         return (<React.Fragment>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="/users">ManageUsers</a>
+            <div classNameName="dropdown-divider"></div>
+            <a classNameName="dropdown-item" href="/users">ManageUsers</a>
           </React.Fragment>);
 
       }
@@ -38,49 +38,50 @@ class Nav extends Component {
           username = currentUser.username;
         }
         return (
-          <nav className="navbar navbar-default navbar-static-top">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed" 
-              data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand" href="/">Home</a>
+          <nav className="navbar navbar-default">
+            <div className="container-fluid">
+              <div className="navbar-header">
+                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span className="sr-only">Toggle navigation</span>
+                  <span className="icon-bar"></span>
+                  <span className="icon-bar"></span>
+                  <span className="icon-bar"></span>
+                </button>
+                <a className="navbar-brand" href="#">Brand</a>
+              </div>
+
+              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul className="nav navbar-nav">
+                    <li><a href="/">My Orders</a></li> 
+                    <li><a href="menu">Menu </a></li>
+                </ul>
+
+                <ul className="nav navbar-nav navbar-right">
+                  <li className="dropdown">
+                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" 
+                    aria-haspopup="true" aria-expanded="false">Signed in as {username} <span className="caret"></span></a>
+                    <ul className="dropdown-menu">
+                      <li><a href="settings">My Settings</a></li>
+                          {this.props.isAdmin ?
+                            (
+                              <React.Fragment>
+                                <li role="separator" className="divider"></li>
+                                <li><a href="users">Users</a></li>
+                                <li><a href="places">Places</a></li>
+                                <li><a href="addUser">Create User</a></li>
+                                <li role="separator" className="divider"></li>
+                              </React.Fragment>
+                            ) : (
+                              null
+                            )
+                          }
+                        <li><a href="" onClick={this.logout}>Logout</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
-        
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul className="nav navbar-nav">
-                <li><a href="/">My Orders</a></li> 
-                <li><a href="menu">Menu </a></li>
-              </ul>
-              <ul className="nav navbar-nav navbar-right">
-                <li><a href="#"></a></li>
-                <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" 
-                  role="button" aria-haspopup="true" aria-expanded="false">Signed in as {username} <span className="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="settings">My Settings</a></li>
-                    {this.props.isAdmin ?
-                      (
-                        <React.Fragment>
-                          <li><a href="users">Users</a></li>
-                          <li><a href="places">Places</a></li>
-                          <li><a href="addUser">Create User</a></li>
-                        </React.Fragment>
-                      ) : (
-                        null
-                      )
-                    }
-                    <li><a href="" onClick={this.logout}>Logout</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+          </nav>
         )
     }
 }
