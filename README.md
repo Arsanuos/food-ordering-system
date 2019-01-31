@@ -9,7 +9,7 @@ A meteor reactive data system for food ordering that was designed for internal u
 
 ## How to use
 
-* Install Meteor from [here](http://meteor.com).
+* Install Meteor from [here](https://www.meteor.com/install).
 * `git clone https://github.com/Arsanuos/food-ordering-system.git`
 * `cd food-ordering-system`
 * `meteor`
