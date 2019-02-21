@@ -26,7 +26,7 @@ A meteor reactive data system for food ordering that was designed for internal u
 * Adapting new data (office changed)
 ![](videos/new-office.gif)
 * Adapting new data (new item in menu)
-![](new-item-menu.gif)
+![](videos/new-item-menu.gif)
 * Multi-column search
 ![](videos/searching.gif)
 * Input validation
